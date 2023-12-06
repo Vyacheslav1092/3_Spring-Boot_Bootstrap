@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Users Info</title>
+
+    <!--Необходимые мета теги -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Bootstrap стили CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <link rel="shortcut icon" href="https://start.spring.io/images/icon-48x48.png">
+    <style>
+        #intro {
+            background-image: url(https://img.freepik.com/free-photo/cloud-storage-banner-background_53876-108506.jpg?w=1380&t=st=1695312928~exp=1695313528~hmac=7f1118dc352d141f02ae91f829655ad9919ca1c44d8d4f8fa3647898d6c0befe);
+            height: 100vh;
+        }
+
+        /* Height for devices larger than 576px */
+        @media (min-width: 992px) {
+            #intro {
+                margin-top: -58.59px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="bs">
+        <div class="container-fluid bg-dark text-white my-4">
+            <div class="row">
+                <div class="col-lg-11 me-auto">
+
+                </div>
+                <div class="col-lg-1 ms-auto">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <button class="btn btn-outline-success bg-dark text-white">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container px-0">
+    <div class="row gx-3">
+        <div class="col">
+            <div class="p-3 border bg-lightgrey"><b>Users Registration</b></div>
+        </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center align-items-center container">
+    <div class="row">
+        <div class="my-4">
+            <div class="p-3 border bg-highlight">
+                <form th:method="POST" th:action="@{/registration}" th:object="${user}">
+
+                    <div class="mb-3">
+                        <label for="name" class="sr-only"><b>FirstName</b></label>
+                        <input type="text" th:field="*{name}" id="name"
+                               class="form-control" placeholder="FirstName" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="sr-only"><b>LastName</b></label>
+                        <input type="text" th:field="*{surname}" id="surname"
+                               class="form-control" placeholder="LastName" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="age" class="sr-only"><b>Age</b></label>
+                        <input type="text" th:field="*{age}" id="age"
+                               class="form-control" placeholder="Age" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="sr-only"><b>Email</b></label>
+                        <input type="text" th:field="*{email}" id="email"
+                               class="form-control" placeholder="Email" required/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="sr-only"><b>Password</b></label>
+                        <input type="text" th:field="*{password}" id="password"
+                               class="form-control" placeholder="Password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label><b>Roles</b></label>
+                        <select class="form-select"
+                                aria-label="Default select example"
+                                th:field="*{roles}" required>
+                            <option th:each="role : ${allRoles}"
+                                    th:value="${role.getId()}"
+                                    th:switch="${role.getName()}">
+                                <span th:case="'ROLE_ADMIN'">ADMIN</span>
+                                <span th:case="'ROLE_USER'">USER</span>
+                            </option>
+                        </select>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-success" type="submit">Registration
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

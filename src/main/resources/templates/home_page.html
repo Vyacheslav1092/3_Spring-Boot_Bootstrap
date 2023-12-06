@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <title>Users Info</title>
+
+    <!--Необходимые мета теги -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Bootstrap стили CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+          integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <link rel="shortcut icon" href="https://start.spring.io/images/icon-48x48.png">
+</head>
+<!--Main Navigation-->
+<header>
+    <style>
+        #intro {
+            background-image: url(https://img.freepik.com/free-photo/cloud-storage-banner-background_53876-108506.jpg?w=1380&t=st=1695312928~exp=1695313528~hmac=7f1118dc352d141f02ae91f829655ad9919ca1c44d8d4f8fa3647898d6c0befe);
+            height: 100vh;
+        }
+
+        /* Height for devices larger than 576px */
+        @media (min-width: 992px) {
+            #intro {
+                margin-top: -58.59px;
+            }
+        }
+
+    </style>
+
+    <!-- Background image -->
+    <div id="intro" class="bg-image shadow-2-strong">
+        <div class="mask d-flex align-items-center h-100" style="background-color: rgba(0, 0, 0, 0.8);">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-xl-5 col-md-8">
+
+                        <div class="text-center">
+                            <h5 class="card-title" style="color: lime">Sign In Your Username and Password</h5>
+                        </div>
+
+                        <div th:if="${param.error}" style="color: red">
+                            <div class="alert alert-danger" role="alert">Invalid Username or Password</div>
+                        </div>
+                        <div style="color: red" th:if="${#fields.hasErrors('logout')}" th:errors="*{logout}">
+                            <div class="alert alert-info" role="alert">You've been logged out successfully</div>
+                        </div>
+
+                        <form class="bg-white  rounded-5 shadow-5-strong p-5" name="f" method="post" action="/login">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <!-- UserName input -->
+                            <div class="form-outline mb-4">
+                                <label for="username">Username</label>
+                                <input type="text" class="form-control" id="username" placeholder="Username" name="username"/>
+                            </div>
+
+                            <!-- Password input -->
+                            <div class="form-outline mb-4">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Password" name="password"/>
+                            </div>
+
+                            <!-- 2 column grid layout for inline styling -->
+                            <div class="row mb-4">
+                                <div class="col d-flex justify-content-center">
+
+                                </div>
+
+                                <div class="col text-center">
+                                    <!-- Simple link -->
+                                    <a href="/registration">Registration</a>
+                                </div>
+                            </div>
+
+                            <!-- Submit button -->
+                            <button class="btn btn-primary btn-block">Sign in</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
