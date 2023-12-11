@@ -19,7 +19,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-
     private final UserService userService;
     private final RoleService roleService;
 
@@ -31,12 +30,11 @@ public class AdminController {
     @GetMapping("/admin")
     public String showAllUsers(Model model, Principal principal) {
         List<User> allUsers = userService.getAllUsers();
-        User user = new User();
-        User user1 = userService.findByUsername(principal.getName());
-        model.addAttribute("newUser", user); // новый пользователь
-        model.addAttribute("userPrincipal", user1); // авторизированный пользователь
+        User authorizedUser = userService.findByUsername(principal.getName());
+        model.addAttribute("newUser", new User()); // новый пользователь
+        model.addAttribute("userPrincipal", authorizedUser); // авторизированный пользователь
         model.addAttribute("allUsers", allUsers); // все пользователи
-        model.addAttribute("allRoles", user1.getRoles()); // все роли авторизованного пользователя
+        model.addAttribute("allRoles", authorizedUser != null ? authorizedUser.getRoles() : null); // все роли авторизованного пользователя
         model.addAttribute("allRolesBD", roleService.listRoles()); // все роли в БД
         return "admin_all_users";
     }

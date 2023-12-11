@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Collection;
@@ -35,7 +36,7 @@ public class User implements UserDetails {
     private String name;
 
     @Column(name = "surname")
-    @NotEmpty(message = "Name should not be empty")
+    @NotEmpty(message = "Surname should not be empty")
     @Size(min=2, message = "Не меньше 2 знаков")
     private String surname;
 
@@ -43,19 +44,19 @@ public class User implements UserDetails {
     private String age;
 
     @Column(name = "email")
-    @Size(min=2, message = "Не меньше 2 знаков")
+    @NotEmpty(message = "Email should not be empty")
+    @Email(message = "Email should be valid")
     private String email;
 
-    @Size(min=2, message = "Не меньше 5 знаков")
     @Column(name = "password")
+    @Size(min = 5, message = "Не меньше 5 знаков")
     private String password;
-
 
     @ManyToMany(cascade=CascadeType.MERGE)
     @JoinTable(
-            name="user_role",
-            joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
-            inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     @Fetch(FetchMode.JOIN)
     private Set<Role> roles;
 

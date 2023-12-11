@@ -9,9 +9,7 @@ import java.util.List;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-
     private final RoleRepository roleRepository;
-
 
     public RoleServiceImpl(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
@@ -20,10 +18,12 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional(readOnly = true)
     public Role getById(int id) {
-        return roleRepository.findById(id).get();
+        return roleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Role with ID " + id + " not found"));
     }
 
     @Override
+    @Transactional
     public void save(Role role) {
         roleRepository.save(role);
     }

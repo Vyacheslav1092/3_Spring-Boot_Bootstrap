@@ -12,7 +12,6 @@ import java.util.Set;
 
 @Component
 public class UserContext implements ApplicationRunner {
-
     private final RoleService roleService;
     private final UserService userService;
 

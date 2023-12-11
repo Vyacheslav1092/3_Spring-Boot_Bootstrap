@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
@@ -35,15 +34,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public void saveUser(User user) {
-        String password = passwordEncoder.encode(user.getPassword());
-        user.setPassword(password);
-        userRepository.saveAndFlush(user);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
     @Transactional(readOnly = true)
     public User getUser(int id) {
-        return userRepository.findById(id).get();
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with id : " + id));
     }
 
     @Override
@@ -54,14 +53,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public void updateUser(User user, int id){
 
-        User userDB = userRepository.findById(id).get(); //Нахожу юзера в БД, кого хочу редактировать, до отправки на обновление в БД
+        User userDB = userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with id : " + id)); //Нахожу юзера в БД, кого хочу редактировать, до отправки на обновление в БД
 
-        if (userDB.getPassword().equals(user.getPassword())) { //если пароль старый его не нужно перезаписывать просто обновляем юзера
-            userRepository.saveAndFlush(user);
-        } else {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));//если пароль новый его нужно перезаписать
-            userRepository.saveAndFlush(user);
+        if (!passwordEncoder.matches(user.getPassword(), userDB.getPassword())) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
         }
+
+        // Задаем ID, чтобы обеспечить обновление существующего пользователя
+        user.setId(userDB.getId());
+        userRepository.save(user);
     }
 
     @Override
@@ -70,21 +71,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-
-    //задача UserDetailsService предоставить из БД юзера по имени
     @Override
-    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        User user = findByUsername(username);
         if (user == null){
-            throw new UsernameNotFoundException("User not found");
+            throw new UsernameNotFoundException("User not found with username: " + username);
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),rolesToAuthorities(user.getRoles()));
-
     }
 
     //метод возвращает коллекцию прав доступа
     private Collection<? extends GrantedAuthority> rolesToAuthorities(Collection<Role>roles){
-        return roles.stream().map(r->new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+        return roles.stream()
+                .map(r->new SimpleGrantedAuthority(r.getName()))
+                .collect(Collectors.toList());
     }
 }
