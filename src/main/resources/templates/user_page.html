@@ -21,28 +21,30 @@
 
 <!--СОЗДАЕМ ШАПКУ-->
 <header>
-    <div class="bs">
-        <div class="container-fluid bg-dark text-white my-4">
-            <div class="row">
-                <div class="col-lg-11 me-auto">
-                    <h5>
-                        <span th:text="${userPrincipal.getEmail()} "></span>
-                        <span> with roles: </span>
-                        <span th:each= "roles:${userPrincipal.getRoles()}"
-                              th:text="${roles.getName().replace('ROLE_','')}+'  '"></span>
-                    </h5>
 
-                </div>
-                <div class="col-lg-1 ms-auto">
-                    <form th:action="@{/logout}" th:method="POST">
-                        <button class="btn btn-outline-success bg-dark text-white">Logout</button>
-                    </form>
-                </div>
+</header>
+
+<div class="bs">
+    <div class="container-fluid bg-dark text-white my-4">
+        <div class="row">
+            <div class="col-lg-11 me-auto">
+                <h5>
+                    <span th:text="${userPrincipal.getEmail()} "></span>
+                    <span> with roles: </span>
+                    <span th:each= "roles:${userPrincipal.getRoles()}"
+                          th:text="${roles.getName().replace('ROLE_','')}+'  '"></span>
+                </h5>
 
             </div>
+            <div class="col-lg-1 ms-auto">
+                <form th:action="@{/logout}" th:method="POST">
+                    <button class="btn btn-outline-success bg-dark text-white">Logout</button>
+                </form>
+            </div>
+
         </div>
     </div>
-</header>
+</div>
 
 <div class="d-flex align-items-start">
     <!--Создаем кнопку слева для получения информации о юзере-->
