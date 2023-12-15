@@ -136,7 +136,6 @@
                                                                 <form th:method="DELETE"
                                                                       th:action="@{/{id}(id=${user.getId()})}"
                                                                       th:object="${user}">
-
                                                                     <div class="mb-3">
                                                                         <label for="delete-id"><b>ID</b></label>
                                                                         <input class="form-control" readonly type="text"
@@ -144,7 +143,6 @@
                                                                                th:value="*{id}"
                                                                                name="id" disabled>
                                                                     </div>
-
                                                                     <div class="mb-3">
                                                                         <label for="delete-firstname"><b>First
                                                                             Name</b></label>
@@ -153,7 +151,6 @@
                                                                                th:value="*{username}"
                                                                                name="firstname" disabled>
                                                                     </div>
-
                                                                     <div class="mb-3">
                                                                         <label for="delete-lastname"><b>Last
                                                                             Name</b></label>
@@ -162,7 +159,6 @@
                                                                                th:value="*{surname}"
                                                                                name="lastname" disabled>
                                                                     </div>
-
                                                                     <div class="mb-3">
                                                                         <label for="delete-age"><b>Age</b></label>
                                                                         <input class="form-control" readonly
@@ -171,7 +167,6 @@
                                                                                th:value="*{age}"
                                                                                name="age" disabled>
                                                                     </div>
-
                                                                     <div class="mb-3">
                                                                         <label for="delete-email"><b>Email</b></label>
                                                                         <input class="form-control" readonly type="text"
@@ -179,7 +174,6 @@
                                                                                th:value="*{email}"
                                                                                name="email" disabled>
                                                                     </div>
-
                                                                     <div class="mb-3">
                                                                         <label for="delete-password"><b>Password</b></label>
                                                                         <input class="form-control" readonly type="text"
@@ -187,7 +181,6 @@
                                                                                th:value="*{password}"
                                                                                name="password" disabled>
                                                                     </div>
-
                                                                     <div class="mb-3">
                                                                         <label><b>Role</b></label>
                                                                         <select class="form-select"
@@ -202,12 +195,10 @@
                                                                             </option>
                                                                         </select>
                                                                     </div>
-
                                                                     <div class="modal-footer text-end">
                                                                         <button type="button" class="btn btn-secondary"
                                                                                 data-bs-dismiss="modal">Close
                                                                         </button>
-
                                                                         <input type="submit" class="btn btn-danger"
                                                                                value="Delete"/>
                                                                     </div>

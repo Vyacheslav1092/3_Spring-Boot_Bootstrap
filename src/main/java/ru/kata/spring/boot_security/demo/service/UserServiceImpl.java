@@ -51,6 +51,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional
     public void updateUser(User user, int id){
 
         User userDB = userRepository.findById(id)
@@ -72,6 +73,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = findByUsername(username);
         if (user == null){
