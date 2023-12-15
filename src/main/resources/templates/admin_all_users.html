@@ -134,7 +134,7 @@
                                                         <div class="d-flex justify-content-center align-items-center container">
                                                             <div class="row">
                                                                 <form th:method="DELETE"
-                                                                      th:action="@{/{id}(id=${user.getId()})}"
+                                                                      th:action="@{delete/{id}(id=${user.getId()})}"
                                                                       th:object="${user}">
                                                                     <div class="mb-3">
                                                                         <label for="delete-id"><b>ID</b></label>
